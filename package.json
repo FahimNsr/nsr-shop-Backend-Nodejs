@@ -1,5 +1,5 @@
 {
-  "name": "online_shop-node",
+  "name": "online_shop-nodejs",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FahimNsr/online_shop-Node.js.git"
+    "url": "git+https://github.com/FahimNsr/online_shop-nodejs.git"
   },
   "author": "Fahim Nasirzadeh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/FahimNsr/online_shop-Node.js/issues"
+    "url": "https://github.com/FahimNsr/online_shop-nodejs/issues"
   },
-  "homepage": "https://github.com/FahimNsr/online_shop-Node.js#readme",
+  "homepage": "https://github.com/FahimNsr/online_shop-nodejs#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
