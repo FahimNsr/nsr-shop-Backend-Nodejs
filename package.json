@@ -1,0 +1,29 @@
+{
+  "name": "online_shop-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FahimNsr/online_shop-Node.js.git"
+  },
+  "author": "Fahim Nasirzadeh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FahimNsr/online_shop-Node.js/issues"
+  },
+  "homepage": "https://github.com/FahimNsr/online_shop-Node.js#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.8",
+    "morgan": "^1.10.0",
+    "yup": "^0.32.9"
+  }
+}
