@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
         activated: { type: Boolean, default: false },
         // cart: { type: Array, ref: "Cart" },
     },
-    { timestamps: true, toJSON: { virtuals: true } }
+    { timestamps: true }
 );
 
 userSchema.statics.userValidation = function (body) {

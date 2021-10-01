@@ -11,7 +11,7 @@ exports.register = async (req, res, next) => {
         if (oldUser) {
             return res.status(409).send("User Already Exist. Please Login");
         } else {
-            const user = await User.create({ firstname, lastname, email, password, admin: true });
+            const user = await User.create({ firstname, lastname, email:email.toLowerCase(), password, admin: true });
             res.status(201).json(user);
         }
     } catch (err) {

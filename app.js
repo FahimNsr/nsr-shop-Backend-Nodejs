@@ -29,9 +29,12 @@ app.use((req, res, next) => {
 // Static Folder
 app.use(express.static(path.join(__dirname, "public")));
 
-// Routes
+// Home Routes
 app.use("/", require("./routes/homeRoutes"));
 app.use("/", require("./routes/authRoutes"));
+
+// Admin Routes
+app.use("/dash", require("./routes/admin/productRoute"));
 
 app.use(apiErrorHandler);
 
