@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const { userValidationSchema } = require("./validators/userValidator");
 
-const userSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
     {
         admin: { type: Boolean, default: false },
         firstname: { type: String, required: true },
@@ -17,11 +17,11 @@ const userSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-userSchema.statics.userValidation = function (body) {
+UserSchema.statics.userValidation = function (body) {
     return userValidationSchema.validate(body, { abortEarly: false });
 };
 
-userSchema.pre("save", function (next) {
+UserSchema.pre("save", function (next) {
     let user = this;
 
     if (!user.isModified("password")) return next();
@@ -34,4 +34,4 @@ userSchema.pre("save", function (next) {
     });
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", UserSchema);

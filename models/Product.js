@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { userValidationSchema } = require("./validators/userValidator");
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
     {
         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         title: { type: String, required: true },
@@ -15,8 +15,8 @@ const productSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-productSchema.statics.productValidation = function (body) {
+ProductSchema.statics.productValidation = function (body) {
     return schema.validate(body, { abortEarly: false });
 };
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Product", ProductSchema);
