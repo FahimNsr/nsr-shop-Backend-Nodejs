@@ -5,7 +5,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const { DataBase } = require("./utils/database");
-const { apiErrorHandler } = require("./utils/apiErrorHandler");
+const { apiErrorHandler } = require("./middlewares/apiErrorHandler");
 // Load Config
 dotEnv.config();
 
@@ -31,7 +31,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Home Routes
 app.use("/", require("./routes/homeRoutes"));
-app.use("/", require("./routes/authRoutes"));
+app.use("/user", require("./routes/authRoutes"));
+app.use("/products", require("./routes/productRoutes"));
 
 // Admin Routes
 app.use("/dash", require("./routes/admin/productRoute"));
