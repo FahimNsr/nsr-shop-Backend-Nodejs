@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema(
         lastname: { type: String, required: true },
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true, minlength: 8, maxlength: 64 },
-        activated: { type: Boolean, default: false },
+        token: { type: String },
+
         // cart: { type: Array, ref: "Cart" },
     },
     { timestamps: true }

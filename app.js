@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const { DataBase } = require("./utils/database");
 const { apiErrorHandler } = require("./utils/apiErrorHandler");
 // Load Config
-dotEnv.config({ path: "./config.env" });
+dotEnv.config();
 
 // Connect DataBase
 DataBase();

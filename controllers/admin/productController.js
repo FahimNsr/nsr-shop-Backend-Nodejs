@@ -90,12 +90,12 @@ exports.updateProduct = async (req, res) => {
                 }
             });
         }
-        const { title, price, stock, sold, overview } = req.body;
+        const { title, price, quantity, sold, overview } = req.body;
         product.title = title;
         product.price = price;
-        product.stock = stock;
+        product.quantity = quantity;
         product.sold = sold;
-        product.sold = overview;
+        product.overview = overview;
 
         product.thumbnail = thumbnail.name ? fileName : product.thumbnail;
 

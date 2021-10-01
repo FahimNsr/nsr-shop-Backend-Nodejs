@@ -11,7 +11,16 @@ exports.register = async (req, res, next) => {
         if (oldUser) {
             return res.status(409).send("User Already Exist. Please Login");
         } else {
-            const user = await User.create({ firstname, lastname, email:email.toLowerCase(), password, admin: true });
+            const user = await User.create({ firstname, lastname, email: email.toLowerCase(), password, admin: true });
+            const token = jwt.sign(
+                { user_id: user._id, firstname: user.firstname, lastname: user.lastname, email: user.email, admin: user.admin },
+                process.env.JWT_KEY,
+                {
+                    expiresIn: "2h",
+                }
+            );
+            user.token = token;
+
             res.status(201).json(user);
         }
     } catch (err) {
@@ -32,9 +41,11 @@ exports.login = async (req, res, next) => {
                 { userId: user._id.toString(), firstname: user.firstname, lastname: user.lastname, email: user.email, admin: user.admin },
                 process.env.JWT_KEY,
                 {
-                    expiresIn: "24h",
+                    expiresIn: "2h",
                 }
             );
+            user.token = token;
+
             res.status(200).json({ token, userId: user._id.toString() });
         } else {
             res.status(400).send("E-mail or password is incorrect");
