@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema(
         password: { type: String, required: true, minlength: 8, maxlength: 64 },
         token: { type: String },
 
-        // cart: { type: Array, ref: "Cart" },
     },
     { timestamps: true }
 );

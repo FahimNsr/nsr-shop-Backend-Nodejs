@@ -90,8 +90,8 @@ exports.updateProduct = async (req, res) => {
                 }
             });
         }
-        const { title, price, quantity, sold, overview } = req.body;
-        product.title = title;
+        const { name, price, quantity, sold, overview } = req.body;
+        product.name = name;
         product.price = price;
         product.quantity = quantity;
         product.sold = sold;

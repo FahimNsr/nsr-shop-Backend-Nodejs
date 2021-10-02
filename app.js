@@ -40,5 +40,7 @@ app.use("/dash", require("./routes/admin/productRoute"));
 app.use(apiErrorHandler);
 
 app.listen(process.env.PORT || 8000, () => {
+    const now = new Date();
+    console.log(`Time: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
     console.log(`Server running on port: ${process.env.PORT}`);
 });

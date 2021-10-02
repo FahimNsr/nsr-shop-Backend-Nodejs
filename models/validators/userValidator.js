@@ -4,7 +4,7 @@ exports.userValidationSchema = Yup.object().shape({
     firstname: Yup.string(),
     lastname: Yup.string(),
     email: Yup.string().email().required(),
-    password: Yup.string().min(8).max(64),
+    password: Yup.string().min(8).max(64).required(),
     confirmPassword: Yup.string()
         .required()
         .oneOf([Yup.ref("password"), null])
