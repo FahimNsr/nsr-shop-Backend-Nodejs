@@ -1,10 +1,12 @@
 const { Router } = require("express");
-
-const productController = require('../../controllers/productController');
-
 const router = new Router();
 
-router.get("/products", productController.products);
+// Controllers
+const { products } = require("../../controllers/productController");
 
+//@desc   GET all Products from DB
+//@route  GET /products
+//access  Public
+router.get("/products", products);
 
 module.exports = router;

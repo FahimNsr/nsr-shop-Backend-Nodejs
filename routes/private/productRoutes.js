@@ -1,18 +1,35 @@
 const { Router } = require("express");
-
-const productController = require("../../controllers/admin/productController");
-const verifyAdmin = require("../../middlewares/verifyAdmin")
-
 const router = new Router();
 
-router.get("/products", verifyAdmin, productController.products);
+// Controllers
+const { products, addProduct, editProduct, updateProduct, deleteProduct } = require("../../controllers/admin/productController");
 
-router.post("/add-product", verifyAdmin, productController.addProduct);
+// Middlewares
+const verifyAdmin = require("../../middlewares/verifyAdmin");
 
-router.get("/edit-product/:id", verifyAdmin, productController.editProduct);
+//@desc   GET all Products from DB
+//@route  GET dash/products
+//access  Private
+router.get("/products", verifyAdmin, products);
 
-router.put("/update-product/:id", verifyAdmin, productController.updateProduct);
+//@desc   POST a Product to DB
+//@route  POST dash/add-product
+//access  Private
+router.post("/add-product", verifyAdmin, addProduct);
 
-router.delete("/delete-product/:id", verifyAdmin, productController.deleteProduct);
+//@desc   GET a Product from DB for Edit
+//@route  GET dash/edit-product/:id
+//access  Private
+router.get("/edit-product/:id", verifyAdmin, editProduct);
+
+//@desc   PUT edited Products to DB
+//@route  PUT dash/update-product/:id
+//access  Private
+router.put("/update-product/:id", verifyAdmin, updateProduct);
+
+//@desc   DELETE a Product from DB
+//@route  DELETE dash/delete-product/:id
+//access  Private
+router.delete("/delete-product/:id", verifyAdmin, deleteProduct);
 
 module.exports = router;

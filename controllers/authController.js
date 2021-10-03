@@ -47,7 +47,7 @@ exports.login = async (req, res, next) => {
             );
             user.token = token;
             
-            res.headers
+            // res.headers
             res.status(200).json({ token, userId: user._id.toString() });
         } else {
             res.status(400).send("E-mail or password is incorrect");

@@ -1,12 +1,18 @@
 const { Router } = require("express");
-
-const homeController = require('../../controllers/homeController');
-const cartController = require('../../controllers/cartController');
-
 const router = new Router();
 
-router.get("/", homeController.home);
-router.post("/add-to-cart", cartController.addToCart);
+// Controllers
+const { home } = require("../../controllers/homeController");
+const { addToCart } = require("../../controllers/cartController");
 
+//@desc   GET HomePage
+//@route  GET /
+//access  Public
+router.get("/", home);
+
+//@desc   POST a Product to User Cart
+//@route  POST /add-to-cart
+//access  Public
+router.post("/add-to-cart", addToCart);
 
 module.exports = router;
