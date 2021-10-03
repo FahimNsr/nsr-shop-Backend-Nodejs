@@ -1,16 +1,23 @@
-const path = require("path");
+// Load Config
+require("dotenv").config();
 
-const dotEnv = require("dotenv");
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 
-const { DataBase } = require("./utils/database");
+const { connectDB } = require("./config/db");
 const { apiErrorHandler } = require("./middlewares/apiErrorHandler");
-// Load Config
-dotEnv.config();
 
-// Connect DataBase
-DataBase();
+// Import Public Routes
+const homeRoutes = require("./routes/public/homeRoutes")
+const authRoutes = require("./routes/public/authRoutes")
+const productRoutes = require("./routes/public/productRoutes")
+
+// Import Private Routes
+const adminRoutesProduct = require("./routes/private/productRoutes")
+
+// Connect to DataBase
+connectDB();
 
 const app = express();
 
@@ -29,13 +36,13 @@ app.use((req, res, next) => {
 // Static Folder
 app.use(express.static(path.join(__dirname, "public")));
 
-// Home Routes
-app.use("/", require("./routes/homeRoutes"));
-app.use("/user", require("./routes/authRoutes"));
-app.use("/products", require("./routes/productRoutes"));
+// SET Public Routes
+app.use("/", homeRoutes);
+app.use("/user", authRoutes);
+app.use("/products", productRoutes);
 
-// Admin Routes
-app.use("/dash", require("./routes/admin/productRoute"));
+// SET Private Routes
+app.use("/dash", adminRoutesProduct);
 
 app.use(apiErrorHandler);
 

@@ -27,10 +27,9 @@ exports.addProduct = async (req, res, next) => {
             .jpeg({ quality: 60 })
             .toFile(uploadPath)
             .catch((err) => console.log(err));
-
         const product = await Product.create({
             ...req.body,
-            user: req.userId,
+            user: req.user.userId,
             thumbnail: fileName,
         });
         res.status(201).json({ product });

@@ -3,7 +3,8 @@ const Cart = require("../models/Cart");
 exports.addToCart = async (req, res, next) => {
     const { productId, quantity, name, price } = req.body;
     const userId = req.body;
-
+    console.log(req)
+    console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
     try {
         let cart = await Cart.findOne({ userId });
 

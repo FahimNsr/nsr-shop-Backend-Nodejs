@@ -33,10 +33,10 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
-        const isMatch = await bcrypt.compare(password, user.password);
         if (!user) {
-            return res.status(404).send("User could not be found.");
+            return res.status(404).send("User could not be found. Please Register");
         }
+        const isMatch = await bcrypt.compare(password, user.password);
         if (user && isMatch) {
             const token = jwt.sign(
                 { userId: user._id.toString(), firstname: user.firstname, lastname: user.lastname, email: user.email, admin: user.admin },
@@ -53,6 +53,7 @@ exports.login = async (req, res, next) => {
             res.status(400).send("E-mail or password is incorrect");
         }
     } catch (err) {
+        console.log(err)
         next(err);
     }
 };

@@ -1,10 +1,10 @@
 const Yup = require("yup");
 
 exports.productValidationSchema = Yup.object().shape({
-    title: Yup.string().required().max(64),
-    price: Yup.string().required(),
-    quantity: Yup.string().required(),
-    sold: Yup.string(),
+    name: Yup.string().required().max(64),
+    price: Yup.number().required(),
+    quantity: Yup.number().required(),
+    sold: Yup.number(),
     overview: Yup.string(),
     thumb: Yup.object().shape({
         name: Yup.string(),
