@@ -23,15 +23,17 @@ exports.addProduct = async (req, res, next) => {
     try {
         req.body = { ...req.body, thumbnail };
         await Product.productValidation(req.body);
-        await sharp(thumbnail.data)
-            .jpeg({ quality: 60 })
-            .toFile(uploadPath)
-            .catch((err) => console.log(err));
+        // await sharp(thumbnail.data)
+        //     .jpeg({ quality: 60 })
+        //     .toFile(uploadPath)
+        //     .catch((err) => console.log(err));
         const product = await Product.create({
             ...req.body,
             user: req.user.userId,
             thumbnail: fileName,
         });
+        console.log(req.user.userId);
+        console.log(typeof(req.user.userId));
         res.status(201).json({ product });
     } catch (err) {
         console.log(err);
@@ -102,7 +104,7 @@ exports.updateProduct = async (req, res) => {
 
         res.status(200).json({ updatedProduct });
     } catch (err) {
-        console.log(err)
+        console.log(err);
         next(err);
     }
 };
@@ -119,7 +121,7 @@ exports.deleteProduct = async (req, res, next) => {
             }
         });
     } catch (err) {
-        console.log(err)
+        console.log(err);
         next(err);
     }
 };

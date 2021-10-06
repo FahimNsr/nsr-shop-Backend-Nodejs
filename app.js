@@ -8,12 +8,13 @@ const morgan = require("morgan");
 const { connectDB } = require("./config/db");
 const { apiErrorHandler } = require("./middlewares/apiErrorHandler");
 
-// Import Public Routes
+// Dashboard Routes
 const homeRoutes = require("./routes/public/homeRoutes")
 const authRoutes = require("./routes/public/authRoutes")
 const productRoutes = require("./routes/public/productRoutes")
+const cartRoutes = require("./routes/public/cartRoutes")
 
-// Import Private Routes
+// Home Routes
 const adminRoutesProduct = require("./routes/private/productRoutes")
 
 // Connect to DataBase
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", homeRoutes);
 app.use("/user", authRoutes);
 app.use("/products", productRoutes);
+app.use("/cart", cartRoutes);
 
 // SET Private Routes
 app.use("/dash", adminRoutesProduct);
