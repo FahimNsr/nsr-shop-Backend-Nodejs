@@ -5,6 +5,15 @@ exports.cart = async (req, res, next) => {
     try {
         const { userId } = req.body;
         const cart = await Cart.findOne({ userId });
+        if (!cart) {
+            await Cart.create({
+                userId,
+                products: [],
+                totalQty,
+                totalPrice,
+            });
+            await Cart.findOne({ userId });
+        }
         res.status(200).json({ cart });
     } catch (err) {
         console.log(err);
