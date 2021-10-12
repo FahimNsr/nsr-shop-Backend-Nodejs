@@ -1,13 +1,22 @@
 const Cart = require("../models/Cart");
 const Product = require("../models/Product");
 
+exports.cart = async (req, res, next) => {
+    try {
+        const { userId } = req.body;
+        const cart = await Cart.findOne({ userId });
+        res.status(200).json({ cart });
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
 exports.addToCart = async (req, res, next) => {
     try {
         const { userId, productId, quantity } = req.body;
-        const product = await Product.findOne({ _id: productId });
+        const product = await Product.findById(productId);
         const { name, price } = product;
-        console.log(product);
-        console.log(name)
         if (quantity > product.quantity - product.sold) {
             res.status(404).send("there is no more in stock");
         } else if (product.quantity - product.sold < 1) {
@@ -67,8 +76,8 @@ exports.removeFromCart = async (req, res, next) => {
             // product exists in cart
             let productItem = cart.products[itemIndex];
 
-            cart.totalQty = cart.totalQty - productItem.qty 
-            cart.totalPrice = cart.totalPrice - productItem.price
+            cart.totalQty = cart.totalQty - productItem.qty;
+            cart.totalPrice = cart.totalPrice - productItem.price;
             cart.products.splice(itemIndex, 1);
             await cart.save();
             return res.status(200).json({ cart });

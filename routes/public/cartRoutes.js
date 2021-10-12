@@ -2,10 +2,15 @@ const { Router } = require("express");
 const router = new Router();
 
 // Controllers
-const { addToCart, removeFromCart } = require("../../controllers/cartController");
+const { cart, addToCart, removeFromCart } = require("../../controllers/cartController");
 
 // Middlewares
 const verifyToken = require("../../middlewares/verifyToken");
+
+//@desc   GET User Cart from DB
+//@route  GET /cart
+//access  Private : User must login & be admin
+router.get("/", verifyToken, cart);
 
 //@desc   Add a Product to User Cart
 //@route  POST /cart/addItem
