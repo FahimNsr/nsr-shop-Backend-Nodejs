@@ -9,14 +9,10 @@ const cors = require('cors')
 const { connectDB } = require("./config/db");
 const { apiErrorHandler } = require("./middlewares/apiErrorHandler");
 
-// Dashboard Routes
-const homeRoutes = require("./routes/public/homeRoutes")
-const authRoutes = require("./routes/public/authRoutes")
-const productRoutes = require("./routes/public/productRoutes")
-const cartRoutes = require("./routes/public/cartRoutes")
-
-// Home Routes
-const adminRoutesProduct = require("./routes/private/productRoutes")
+// Routes
+const publicRoutes = require("./routes/publicRoutes")
+const userRoutes = require("./routes/userRoutes")
+const adminRoutes = require("./routes/adminRoutes")
 
 // Connect to DataBase
 connectDB();
@@ -39,14 +35,11 @@ app.use((req, res, next) => {
 // Static Folder
 app.use(express.static(path.join(__dirname, "public")));
 
-// SET Public Routes
-app.use("/", homeRoutes);
-app.use("/user", authRoutes);
-app.use("/products", productRoutes);
-app.use("/cart", cartRoutes);
+// SET Routes
+app.use("/", publicRoutes);
+app.use("/", userRoutes);
+app.use("/dash", adminRoutes);
 
-// SET Private Routes
-app.use("/dash", adminRoutesProduct);
 
 app.use(apiErrorHandler);
 
