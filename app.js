@@ -4,6 +4,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
+const cors = require('cors')
 
 const { connectDB } = require("./config/db");
 const { apiErrorHandler } = require("./middlewares/apiErrorHandler");
@@ -23,6 +24,7 @@ connectDB();
 const app = express();
 
 app.use(morgan("dev"));
+app.use(cors())
 
 // Body-Parser
 app.use(express.urlencoded({ extended: false }));

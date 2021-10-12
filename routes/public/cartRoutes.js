@@ -7,14 +7,14 @@ const { addToCart, removeFromCart } = require("../../controllers/cartController"
 // Middlewares
 const verifyToken = require("../../middlewares/verifyToken");
 
-//@desc   POST a Product to User Cart
-//@route  POST /cart/add/:id
+//@desc   Add a Product to User Cart
+//@route  POST /cart/addItem
 //access  Private : User must login
-router.post("/add/:id", verifyToken, addToCart);
+router.post("/addItem", verifyToken, addToCart);
 
 //@desc   Remove a Product from User Cart
-//@route  POST /cart/remove/:id
+//@route  Put /cart/removeItem
 //access  Private : User must login
-router.put("/remove/:id", verifyToken, removeFromCart);
+router.put("/removeItem", verifyToken, removeFromCart);
 
 module.exports = router;

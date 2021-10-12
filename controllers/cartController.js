@@ -2,39 +2,48 @@ const Cart = require("../models/Cart");
 const Product = require("../models/Product");
 
 exports.addToCart = async (req, res, next) => {
-    const userId = req.body.userId;
     try {
-        // find product
-        let product = await Product.findOne({ _id: req.params.id });
-        const { quantity } = req.body;
-        const { id, name, price } = product;
-
+        const { userId, productId, quantity } = req.body;
+        const product = await Product.findOne({ _id: productId });
+        const { name, price } = product;
+        console.log(product);
+        console.log(name)
         if (quantity > product.quantity - product.sold) {
-            res.status(404).send("there is no more in stock ");
+            res.status(404).send("there is no more in stock");
         } else if (product.quantity - product.sold < 1) {
-            res.status(404).send("This product does not in stock ");
+            res.status(404).send("This product does not in stock");
         } else {
             let cart = await Cart.findOne({ userId });
             //cart exists for user
             if (cart) {
-                let itemIndex = cart.products.findIndex((p) => p.productId == product._id);
+                let itemIndex = cart.products.findIndex((p) => p.productId == productId);
 
                 if (itemIndex > -1) {
                     //product exists in the cart, update the quantity
                     let productItem = cart.products[itemIndex];
-                    productItem.quantity = quantity;
+                    cart.totalQty = cart.totalQty - productItem.qty + quantity;
+                    cart.totalPrice = cart.totalPrice - productItem.price + quantity * price;
+                    productItem.qty = quantity;
+                    productItem.price = quantity * price;
                     cart.products[itemIndex] = productItem;
                 } else {
                     //product does not exists in cart, add new item
-                    cart.products.push({ productId: id, quantity, name, price });
+
+                    cart.products.push({ productId, name, qty: quantity, price: price * quantity });
+                    cart.totalQty += quantity;
+                    cart.totalPrice += price * quantity;
                 }
                 cart = await cart.save();
                 return res.status(201).send(cart);
             } else {
                 //no cart for user, create new cart
+                let totalQty = quantity;
+                let totalPrice = quantity * price;
                 const newCart = await Cart.create({
                     userId,
-                    products: [{ productId: id, quantity, name, price }],
+                    products: [{ productId, name, qty: quantity, price: quantity * price }],
+                    totalQty,
+                    totalPrice,
                 });
 
                 return res.status(201).send(newCart);
@@ -52,10 +61,14 @@ exports.removeFromCart = async (req, res, next) => {
     try {
         let cart = await Cart.findOne({ userId });
         // find index of product in cart
-        let itemIndex = cart.products.findIndex((p) => p.productId == req.params.id);
+        let itemIndex = cart.products.findIndex((p) => p.productId == req.body.productId);
 
         if (itemIndex > -1) {
             // product exists in cart
+            let productItem = cart.products[itemIndex];
+
+            cart.totalQty = cart.totalQty - productItem.qty 
+            cart.totalPrice = cart.totalPrice - productItem.price
             cart.products.splice(itemIndex, 1);
             await cart.save();
             return res.status(200).json({ cart });
