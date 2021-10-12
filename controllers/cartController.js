@@ -4,17 +4,16 @@ const Product = require("../models/Product");
 exports.cart = async (req, res, next) => {
     try {
         const { userId } = req.body;
-        const cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne({ userId });
         if (!cart) {
-            await Cart.create({
+            let cart = await Cart.create({
                 userId,
                 products: [],
-                totalQty,
-                totalPrice,
             });
-            await Cart.findOne({ userId });
+            res.status(200).json({ cart });
+        } else {
+            res.status(200).json({ cart });
         }
-        res.status(200).json({ cart });
     } catch (err) {
         console.log(err);
         next(err);
