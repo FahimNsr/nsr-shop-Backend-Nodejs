@@ -1,50 +1,63 @@
+const path = require("path");
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const cors = require("cors");
+
+// Routes
+const userRouter = require("./routers/userRouter");
+const productRouter = require("./routers/productRouter");
+const uploadRouter = require("./routers/uploadRouter");
+const orderRouter = require("./routers/orderRouter");
+// const cartRouter = require("./routes/cartRouter")
+
 // Load Config
 require("dotenv").config();
 
-const path = require("path");
-const express = require("express");
-const morgan = require("morgan");
-const cors = require('cors')
+// Connect to MongoDB
+const connectDB = async () => {
+  try {
+    const connect = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-const { connectDB } = require("./config/db");
-const { apiErrorHandler } = require("./middlewares/apiErrorHandler");
-
-// Routes
-const publicRoutes = require("./routes/publicRoutes")
-const userRoutes = require("./routes/userRoutes")
-const adminRoutes = require("./routes/adminRoutes")
-
-// Connect to DataBase
+    console.log(`MongoDB Connected ${connect.connection.host}`);
+  } catch (err) {
+    console.error("MongoDB Connection FAIL");
+    process.exit(1);
+  }
+};
 connectDB();
 
 const app = express();
 
 app.use(morgan("dev"));
-app.use(cors())
+app.use(cors());
 
 // Body-Parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
-});
 
 // Static Folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "uploads")));
 
-// SET Routes
-app.use("/", publicRoutes);
-app.use("/", userRoutes);
-app.use("/dash", adminRoutes);
+// SET Routers
+app.use("/api/uploads", uploadRouter);
+app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
+app.use("/api/orders", orderRouter);
+// app.use("/api/cart", cartRouter);
 
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
+});
 
-app.use(apiErrorHandler);
+// Error Handling
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
+});
 
 app.listen(process.env.PORT || 8000, () => {
-    const now = new Date();
-    console.log(`Time: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
-    console.log(`Server running on port: ${process.env.PORT}`);
+  console.log(`Server running on port: ${process.env.PORT} Time: ${new Date()}`);
 });
