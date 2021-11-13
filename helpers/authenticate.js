@@ -29,7 +29,7 @@ exports.isAuth = (req, res, next) => {
       }
     });
   } else {
-    res.status(401).send({ message: "No Token" });
+    res.status(401).send({ message: "You need login to access this page" });
   }
 };
 exports.isAdmin = (req, res, next) => {
