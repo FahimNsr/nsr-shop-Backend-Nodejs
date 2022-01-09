@@ -8,7 +8,7 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
-  // categories,
+  getCategories,
 } = require("../controllers/productController");
 
 // Middlewares
@@ -18,6 +18,9 @@ const { isAuth, isSellerOrAdmin } = require("../helpers/authenticate");
 //@route  GET api/products
 productRouter.get("/", getProducts);
 
+// @desc   GET Products'categories from DB
+// @route  GET api/products/categories
+productRouter.get("/categories", getCategories);
 
 //@desc   GET Product Details from DB
 //@route  GET api/products/:id
@@ -34,10 +37,5 @@ productRouter.put("/:id", isAuth, isSellerOrAdmin, updateProduct);
 //@desc   DELETE a Product from DB
 //@route  DELETE api/products/:id
 productRouter.delete("/:id", isAuth, isSellerOrAdmin, deleteProduct);
-
-
-//@desc   GET  Products'categories from DB
-//@route  GET api/products
-// productRouter.get("/categories", categories);
 
 module.exports = productRouter;

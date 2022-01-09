@@ -23,9 +23,10 @@ userRouter.get("/:id", isAuth, userProfile);
 //@route  PUT /api/users/profile
 userRouter.put("/profile", isAuth, updateProfile);
 
-
+//@desc   GET Users list from DB
+//@route  GET api/users
+userRouter.get("/", isAuth, isAdmin, usersList);
 
 // userRouter.put("/:id", isAuth, isAdmin, updateUser);
-// userRouter.get("/", isAuth, isAdmin, usersList);
 
 module.exports = userRouter;

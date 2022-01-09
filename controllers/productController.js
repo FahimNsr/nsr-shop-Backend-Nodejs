@@ -130,7 +130,7 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
-// exports.categories = async (req, res) => {
-//   const categories = await Product.find().distinct("category");
-//   res.send(categories);
-// };
+exports.getCategories = async (req, res) => {
+  const categories = await Product.find().distinct("category");
+  res.send(categories);
+};

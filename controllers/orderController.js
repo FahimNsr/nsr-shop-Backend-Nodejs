@@ -46,7 +46,11 @@ exports.orderDetails = async (req, res) => {
   }
 };
 
-// exports.ordersList = async (req, res) => {};
+exports.ordersList = async (req, res) => {
+  const orders = await Order.find({});
+  res.send(orders);
+};
+
 // exports.ordersSummary = async (req, res) => {};
 // exports.deleteOrder = async (req, res) => {};
 // exports.deliverOrder = async (req, res) => {};

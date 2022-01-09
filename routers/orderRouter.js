@@ -6,8 +6,7 @@ const {
   createOrder,
   orderDetails,
   userOrders,
-  // paymentOrder,
-  // ordersList,
+  ordersList,
   // ordersSummary,
   // deleteOrder,
   // deliverOrder,
@@ -29,9 +28,9 @@ orderRouter.get("/myorders", isAuth, userOrders);
 orderRouter.get("/:id", isAuth, orderDetails);
 
 
-//@desc   GET 
+//@desc   GET Orders list from DB
 //@route  GET api/orders/
-// orderRouter.get("/", isAuth, isSellerOrAdmin, ordersList);
+orderRouter.get("/", isAuth, isSellerOrAdmin, ordersList);
 
 // orderRouter.get("/summary", isAuth, isAdmin, ordersSummary);
 
